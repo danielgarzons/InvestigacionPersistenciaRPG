@@ -2,9 +2,9 @@
 Universidad Distrital FJDC
 
 ### INTEGRANTES: 
-**Andres Villarraga Piratoba** - `Código`
+**Andres Villarraga Piratoba** - `20252578015`
 
-**Sergio Pastrana** - `Código`
+**Sergio Pastrana** - `20252578086`
 
 **Juan Daniel Garzon Solaque** - `20252578019`
 
