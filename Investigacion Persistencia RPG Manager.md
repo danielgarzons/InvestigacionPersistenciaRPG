@@ -687,7 +687,7 @@ se parecen en q todos funcionan bajo el modelo Clave-Valor, todos son muy flexib
 
 **3. ¿Qué diferencia hay entre MongoDB local, MongoDB Atlas y mongoplayground.net? ¿Cuál de los tres puede usar un programa en Java o Python?**
 
-MongoDB local es el motor ded la base de datos q se instala y se ejecuta directamente en una computadora con un servidor local
+MongoDB local es el motor de la base de datos q se instala y se ejecuta directamente en una computadora con un servidor local
 MongoDB Atlas es la version de la nube que esta alojada en servidores de proovedores como AWS, etc. Se accede a la base de datos a traves de internet mediante una URL de conexion.
 mongoplayground.net es una web interactiva y de entorno de pruebas, sirve unicamente para probar y practicar en general.
 
