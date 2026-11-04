@@ -678,20 +678,47 @@ Es una sentencia compuesta que permite la ejecución de codigo de inicializació
 ## <p align="center">Tema 6: MongoDB desde el codigo</p>
 
 **1.Que es un (`ObjectId`) y que informacion guarda por dentro?**
+
 Es el atributo primario del objeto que le da una identificación única para diferenciarlo de todos los objetos existentes y por existir, que guarda? guarda una combinacion de datos especificos donde la primera parte de 4 bytes guarda la fecha y hora de creacion, la segunda parte es un identificador aleatorio asignado por la maquina y el ultimo el contador incremental
 
 **2.En que se parece un documento MongoDB a un (`HashMap`) de Java o a un (`dict`) de python ?**
+
 se parecen en q todos funcionan bajo el modelo Clave-Valor, todos son muy flexibles y dinamicos a diferencia de sql con sus esquemas rigidos  y tambien soportan multiples tipos de datos para sus valores.
 
 **3. ¿Qué diferencia hay entre MongoDB local, MongoDB Atlas y mongoplayground.net? ¿Cuál de los tres puede usar un programa en Java o Python?**
+
 MongoDB local es el motor ded la base de datos q se instala y se ejecuta directamente en una computadora con un servidor local
 MongoDB Atlas es la version de la nube que esta alojada en servidores de proovedores como AWS, etc. Se accede a la base de datos a traves de internet mediante una URL de conexion.
 mongoplayground.net es una web interactiva y de entorno de pruebas, sirve unicamente para probar y practicar en general.
 
 Tanto el MongoDB local como el Atlas pueden usar un programa de Java y Python, el mongoplayground.net no ya que este es solo una interfaz grafica web para simular consultas.
 
+
+
+## <p align="center">Tema 7: ORM </p>
+
+**1.Que es un ORM?**
+
+un ORM (Object Relational Mapping) es una forma de programar que permite interactuar con una base de datos utilizando un lenguaje de programacion como la programacion orientada a objetos en lugar de hacer consultas SQL directas basicamente funcionando como un puente entre estos dos
+
+**2.Nombren uno de Java y uno de Python**
+
+Para java uno de los ORM mas utilizados es el (`Java: Hibernate`) que es el ORM estandar y mas utilizado en el ecosistema Java/Jakarta EE.
+Para phyton  es el  (`SQLAlchemy`)  o el (`Django ORM`) si se trabaja dentro del framework Django.
+
+**3.Den una ventaja y una desventaja de usar un ORM en lugar de escribir el SQL a mano**
+
+Una de sus mayores ventajas en su velocidad de desarrollo y su mantenibilidad ya que el codigo de la base de datos se escribe en el mismo lenguaje del proyecto donde se puede reducir el codigo repetitivo y ayuda a un desarrollo del CRUD mas rapido
+
+Una de sus desventajas es que hay una perdida de rendimiento y de control en consultas ya muy complejas.
+
+
+
+
 ### Fuentes citadas:
 - https://coddy.tech/learn/es/java/logic_and_flow/what_is_a_hashmap
+
+- https://ed.team/blog/por-que-usar-un-orm-ventajas-y-desventajas
 
 - https://www.mongodb.com/products/platform/atlas-database/features
 
