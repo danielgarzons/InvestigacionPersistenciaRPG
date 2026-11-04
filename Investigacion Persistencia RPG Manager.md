@@ -422,7 +422,181 @@ Al delegar la creación del repositorio a un agente externo, nuestro código obt
 
 - **Mayor reutilizacion y control del ciclo de vida:** Cuando el Service instancia el repositorio, perdemos el control sobre cómo se gestiona esa instancia. Al recibirlo, el contenedor de dependencias puede decidir si el repositorio debe ser un **Singleton** (una unica instancia para toda la aplicación) o si debe tener un ciclo de vida compartido con otras clases.
 
+## <p align="center">Tema 4: Configuración y secretos</p>
 
+**¿Como se lee un archivo .properties en Java y un archivo .ini en Python?
+Nombren la clase o el modulo que se usa. **
+
+Para leer archivos de configuración en Java y Python se utilizan las siguientes herramientas:
+
+Java (`.properties`):
+Clase:** `java.util.Properties`
+Cómo se lee:** Se instancia la clase `Properties` y se utiliza su metodo `load(InputStream inStream)` o `load(Reader reader)` para cargar el contenido del archivo de propiedades en memoria.
+
+Python (`.ini`):
+Modulo: `configparser`
+Como se lee: Se importa el modulo, se inicializa un objeto con `configparser.ConfigParser()` y se utiliza el metodo `read('nombre_archivo.ini')` para procesar el archivo.
+
+### __***Ejemplo:***__
+
+En el caso del proyecto RPG manager podriamos utilizarlos para definir parametros iniciales del juego, como los datos del héroe por defecto en la taberna, los puertos del servidor o las reglas de validación de la siguiente manera: 
+
+---
+
+### 1. Versión Java (`RPG Manager` con Javalin)
+
+En Java utilizamos la clase `java.util.Properties` para definir los valores iniciales de la taberna y la configuración del puerto del servidor web.
+
+### Archivo de configuración (`config.properties`)
+Ubicación: `src/main/resources/config.properties`
+
+```properties
+server.port=7070
+taberna.default_hero_name=Aragorn
+taberna.default_hero_class=Guerrero
+taberna.default_hero_level=10
+taberna.default_hero_vida=100
+```
+
+### Implementación en `RPG_manager.java`
+
+´´´java
+package com.mycompany.rpg_manager;
+
+import io.javalin.Javalin;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+import controlador.PersonajeController;
+
+public class RPG_manager {
+    public static void main(String[] args) {
+        Properties props = new Properties();
+        
+        // Cargar el archivo config.properties desde el classpath/recursos
+        try (InputStream input = RPG_manager.class.getClassLoader().getResourceAsStream("config.properties")) {
+            if (input != null) {
+                props.load(input);
+            } else {
+                System.out.println("Archivo de propiedades no encontrado, se usarán valores por defecto.");
+            }
+        } catch (IOException ex) {
+            System.err.println("Error al cargar el archivo de configuración: " + ex.getMessage());
+        }
+
+        // Obtener valores del archivo .properties (con valores de respaldo)
+        int puerto = Integer.parseInt(props.getProperty("server.port", "7070"));
+        String nombreHeroe = props.getProperty("taberna.default_hero_name", "Aventurero");
+        String claseHeroe = props.getProperty("taberna.default_hero_class", "Guerrero");
+        int nivelHeroe = Integer.parseInt(props.getProperty("taberna.default_hero_level", "1"));
+        int vidaHeroe = Integer.parseInt(props.getProperty("taberna.default_hero_vida", "100"));
+
+        // 1. Agregar el personaje inicial usando la configuración leída
+        Taberna.repositorioPersonajes.add(new Personaje(nombreHeroe, claseHeroe, nivelHeroe, vidaHeroe));
+
+        // 2. Iniciar Javalin en el puerto obtenido
+        Javalin app = Javalin.create(config -> {
+            config.staticFiles.add("/public");
+        }).start(puerto);
+
+        // 3. Mapear las rutas HTTP
+        app.get("/personajes", PersonajeController::obtenerTodos);
+        
+        System.out.println("Servidor RPG Manager iniciado en el puerto: " + puerto);
+    }
+}
+```
+
+---
+
+### 2. Versión Python (`RPG Manager` con Flask)
+
+En Python utilizamos el módulo nativo `configparser` para gestionar reglas de negocio (rangos de niveles permitidos) y configuraciones generales en la capa de servicios.
+
+### Archivo de configuración (`config.ini`)
+Ubicación: Raíz del proyecto (`Proyect_RPG_Python/config.ini`)
+
+´´´ini
+[GameRules]
+min_nivel = 1
+max_nivel = 100
+vida_por_defecto = 100
+
+[Server]
+port = 5000
+debug = true
+```
+
+### Implementación en la Capa de Servicios (`services/personaje_service.py`)
+
+```python
+import configparser
+import os
+
+# Cargar el archivo config.ini desde la raíz del proyecto
+config = configparser.ConfigParser()
+config_path = os.path.join(os.path.dirname(__file__), '../config.ini')
+config.read(config_path)
+
+# Leer reglas de negocio desde el archivo .ini (usando conversión de tipos con getint)
+MIN_NIVEL = config.getint('GameRules', 'min_nivel', fallback=1)
+MAX_NIVEL = config.getint('GameRules', 'max_nivel', fallback=100)
+VIDA_DEF = config.getint('GameRules', 'vida_por_defecto', fallback=100)
+
+def es_valido(nombre, clase, nivel):
+    """
+    Valida los datos del personaje utilizando las reglas 
+    cargadas dinámicamente desde el archivo config.ini.
+    """
+    # 1. Validar nombre no vacío
+    if not nombre or not nombre.strip():
+        return False, "El nombre del personaje no puede estar vacío."
+
+    # 2. Validar clases permitidas
+    clases_permitidas = ["Guerrero", "Mago", "Arquero"]
+    if clase.capitalize() not in clases_permitidas:
+        return False, f"Clase inválida. Debe ser una de: {clases_permitidas}"
+
+    # 3. Validar nivel dentro del rango configurado en config.ini (1 a 100)
+    if not (MIN_NIVEL <= nivel <= MAX_NIVEL):
+        return False, f"El nivel debe estar comprendido entre {MIN_NIVEL} y {MAX_NIVEL}."
+
+    return True, "OK"
+```
+
+**2.¿Para qué sirve .gitignore y qué pasa si un archivo ya se subió antes de ignorarlo?**
+
+¿Para que sirve .gitignore?
+
+- Especifica archivos intencionalmente no rastreados que Git debe ignorar.
+
+- Su proposito es asegurar que ciertos archivos que no son rastreados por Git permanezcan sin rastrear.
+
+¿Que pasa si un archivo ya se subio antes de ignorarlo?
+
+- Los archivos que ya están siendo rastreados por Git no se ven afectados.
+
+- Para dejar de rastrear un archivo actual, se debe usar git rm --cached para eliminarlo del índice.
+
+- Posteriormente, el nombre del archivo se puede añadir al archivo .gitignore para evitar que se vuelva a introducir en commits futuros.
+
+**3. Busquen un caso real de contraseñas o llaves filtradas en GitHub: qué pasó y quéconsecuencias tuvo**
+
+En 2016, Uber sufrió una brecha que afectó a unos 57 millones de usuarios y conductores. Los atacantes entraron a un repositorio privado de GitHub con credenciales robadas, encontraron allí una llave de acceso de AWS escrita en el código y con ella accedieron a un bucket S3 con los datos. Uber pagó 100.000 dólares a los atacantes para mantenerlo en secreto y luego tuvo consecuencias legales por ocultarlo. Lección: una llave dentro del código es un riesgo aunque el repositorio sea privado.
+
+### Fuentes citadas:
+- https://docs.oracle.com/javase/8/docs/api/java/util/Properties.html
+- https://www.freecodecamp.org/news/how-to-parse-ini-config-files-in-python-with-configparser/
+- https://git-scm.com/docs/gitignore
+- https://www.securityweek.com/uber-settles-federal-investigators-over-2016-data-breach-coverup/
+
+---
+
+
+### Fuentes citadas:
+- https://builtin.com/articles/dependency-injection (Trad. Español)
+
+- https://medium.com/@Masoncoding/programming-to-an-interface-not-an-implementation-024d01815070 (Trad. Español)
   
 
 ## <p align="center">Tema 6: MongoDB desde el codigo</p>
@@ -440,25 +614,7 @@ mongoplayground.net es una web interactiva y de entorno de pruebas, sirve unicam
 
 Tanto el MongoDB local como el Atlas pueden usar un programa de Java y Python, el mongoplayground.net no ya que este es solo una interfaz grafica web para simular consultas.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ### Fuentes citadas:
-- https://builtin.com/articles/dependency-injection (Trad. Español)
-
-- https://medium.com/@Masoncoding/programming-to-an-interface-not-an-implementation-024d01815070 (Trad. Español)
-  
 - https://coddy.tech/learn/es/java/logic_and_flow/what_is_a_hashmap
 
 - https://www.mongodb.com/products/platform/atlas-database/features
