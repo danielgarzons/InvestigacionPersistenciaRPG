@@ -422,6 +422,12 @@ Al delegar la creación del repositorio a un agente externo, nuestro código obt
 
 - **Mayor reutilizacion y control del ciclo de vida:** Cuando el Service instancia el repositorio, perdemos el control sobre cómo se gestiona esa instancia. Al recibirlo, el contenedor de dependencias puede decidir si el repositorio debe ser un **Singleton** (una unica instancia para toda la aplicación) o si debe tener un ciclo de vida compartido con otras clases.
 
+
+### Fuentes citadas:
+- https://builtin.com/articles/dependency-injection (Trad. Español)
+
+- https://medium.com/@Masoncoding/programming-to-an-interface-not-an-implementation-024d01815070 (Trad. Español)
+
 ## <p align="center">Tema 4: Configuración y secretos</p>
 
 **¿Como se lee un archivo .properties en Java y un archivo .ini en Python?
@@ -592,12 +598,82 @@ En 2016, Uber sufrió una brecha que afectó a unos 57 millones de usuarios y co
 
 ---
 
+## <p align="center">Tema 5: MariaDB desde el codigo</p>
+
+ **1. ¿Qué es JDBC y qué hace un driver? ¿Qué librería cumple ese papel en Python paraMariaDB?**
+
+Java Database Connectivity (JDBC) es la API estandar de Java para hablar con la base de datos relacionales. El driver es aquel que traduce las llamadas estandar al protocolo de un motor especifico.
+En Python este palpel lo puede cumplir la libreria PyMySQL.
+
+**2. ¿Qué es la inyección SQL? Muestren un ejemplo con el nombre de un personaje y expliquen por que PreparedStatement (Java) o los parámetros %s (Python) la evitan.**
+
+Inyección SQL Ocurre cuando el texto que escribe el usuario se pega dentro de la consulta y termina interpretandose como codigo SQL.
+
+### __***Ejemplo:***__
+
+    ´´´SELECT * FROM personajes WHERE nombre = 'ARAGORN';```
+
+- ### Comportamiento normal 
+Si el usuario busca Aragorn, la consulta busca exactamente ese nombre.
+
+- ### Ataque de inyección SQL
+Si en lugar de un nombre legítimo, el usuario ingresa el siguiente texto malicioso en el campo de entrada:
+
+    ´´´' OR '1'='1```
+
+La consulta final que se ejecuta en la base de datos se transforma en:
+
+    ´´´SELECT * FROM personajes WHERE nombre = '' OR '1'='1';```
+
+Como la condición '1'='1' siempre es verdadera (TRUE), la base de datos interpretará que debe devolver todos los registros de la tabla personajes, exponiendo información confidencial o sensible.
+
+Tanto PreparedStatement (en Java) como el uso de parametros seguros (en Python) evitan la inyección SQL porque separan estructura del codigo SQL de los datos proporcionados por el usuario.
+
+**3. ¿Qué es una transacción y qué hace commit()? ¿Qué pasa en PyMySQL si no se llama?**
+
+- ### ¿Qué es una transacción?
+
+Una transacción incluye todas las sentencias que se ejecutan entre el inicio de la misma y una sentencia de finalización (como COMMIT o ROLLBACK). Garantizando que los cambios se realicen de forma adecuada y manteniendo la DB coherente.
+
+- ### ¿Qué hace COMMIT?
+
+La sentencia COMMIT confirma y guarda de forma permanente todos los cambios de de archivos realizados. Si se ejecuta correctamente, los cambios se graban en el disco.
+
+- ### ¿Qué pasa en PyMySQL si no se llama?
+
+Si realizas operaciones que modifican datos (como INSERT, UPDATE o DELETE) y no llamas explicitamente a commit(), los cambios se quedarán almacenados temporalmente de forma provisional no se guardarán de manera permanente en la base de datos una vez que la conexión termine.
+
+**4. ¿Por qué hay que cerrar las conexiones? ¿Qué es try-with-resources en Java y with en Python?**
+
+- ### ¿Por qué hay que cerrar las conexiones?
+
+Si no se hace, el sistema operativo considerará que el recurso sigue en uso y la información necesaria para liberarlo se perderá.
+
+- ### ¿Qué es try-with-resources en Java?
+
+Es una sentencia try que declara uno o más recursos (objetos que deben cerrarse al terminar de usarse, implementando java.lang.AutoCloseable o java.io.Closeable). Asegura automáticamente que cada recurso sea cerrado al finalizar la sentencia, sin importar si esta se completa de manera normal o abrupta debido a una excepción.
+
+- ### ¿Qué es with en Python?
+
+Es una sentencia compuesta que permite la ejecución de codigo de inicialización y finalización alrededor de un bloque de codigo definido, gestiona el uso de contextos de manera segura.
 
 ### Fuentes citadas:
-- https://builtin.com/articles/dependency-injection (Trad. Español)
 
-- https://medium.com/@Masoncoding/programming-to-an-interface-not-an-implementation-024d01815070 (Trad. Español)
-  
+- https://www.ibm.com/docs/es/informix-servers/12.10.0?topic=started-what-is-jdbc
+
+- https://docs.oracle.com/cd/E19509-01/820-5069/6ngg83nak/index.html
+
+- https://entrenamiento-python-avanzado.readthedocs.io/es/latest/leccion6/mysql.html
+
+- https://towardsdev.com/java-libraries-for-sql-injection-prevention-47c2018f5829
+
+- https://www.ibm.com/docs/es/iis/11.5.0?topic=functions-commit-statement
+
+- https://docs.python.org/3/reference/compound_stmts.html#the-with-statement
+
+- https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html 
+
+---
 
 ## <p align="center">Tema 6: MongoDB desde el codigo</p>
 
