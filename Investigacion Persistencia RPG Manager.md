@@ -423,6 +423,29 @@ Al delegar la creación del repositorio a un agente externo, nuestro código obt
 - **Mayor reutilizacion y control del ciclo de vida:** Cuando el Service instancia el repositorio, perdemos el control sobre cómo se gestiona esa instancia. Al recibirlo, el contenedor de dependencias puede decidir si el repositorio debe ser un **Singleton** (una unica instancia para toda la aplicación) o si debe tener un ciclo de vida compartido con otras clases.
 
 
+  
+
+## <p align="center">Tema 6: MongoDB desde el codigo</p>
+
+**1.Que es un (`ObjectId`) y que informacion guarda por dentro?**
+Es el atributo primario del objeto que le da una identificación única para diferenciarlo de todos los objetos existentes y por existir, que guarda? guarda una combinacion de datos especificos donde la primera parte de 4 bytes guarda la fecha y hora de creacion, la segunda parte es un identificador aleatorio asignado por la maquina y el ultimo el contador incremental
+
+**2.En que se parece un documento MongoDB a un (`HashMap`) de Java o a un (`dict`) de python ?**
+se parecen en q todos funcionan bajo el modelo Clave-Valor, todos son muy flexibles y dinamicos a diferencia de sql con sus esquemas rigidos  y tambien soportan multiples tipos de datos para sus valores.
+
+**3. ¿Qué diferencia hay entre MongoDB local, MongoDB Atlas y mongoplayground.net? ¿Cuál de los tres puede usar un programa en Java o Python?**
+MongoDB local es el motor ded la base de datos q se instala y se ejecuta directamente en una computadora con un servidor local
+MongoDB Atlas es la version de la nube que esta alojada en servidores de proovedores como AWS, etc. Se accede a la base de datos a traves de internet mediante una URL de conexion.
+mongoplayground.net es una web interactiva y de entorno de pruebas, sirve unicamente para probar y practicar en general.
+
+Tanto el MongoDB local como el Atlas pueden usar un programa de Java y Python, el mongoplayground.net no ya que este es solo una interfaz grafica web para simular consultas.
+
+
+
+
+
+
+
 
 
 
@@ -435,3 +458,9 @@ Al delegar la creación del repositorio a un agente externo, nuestro código obt
 - https://builtin.com/articles/dependency-injection (Trad. Español)
 
 - https://medium.com/@Masoncoding/programming-to-an-interface-not-an-implementation-024d01815070 (Trad. Español)
+  
+- https://coddy.tech/learn/es/java/logic_and_flow/what_is_a_hashmap
+
+- https://www.mongodb.com/products/platform/atlas-database/features
+
+
