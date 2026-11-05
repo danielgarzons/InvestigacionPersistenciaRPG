@@ -1,4 +1,4 @@
-o# Investigación previa · Persistencia RPG
+# Investigación previa · Persistencia RPG
 
 
 ### INTEGRANTES: 
