@@ -271,7 +271,7 @@ Creamos la interfaz para definir el contrato:
     ```
 
 - ### **CASO: ¿Qué pasa si "olvidamos" un método? (Mago)**
-    Si creamos la clase `Mago` y por decuido se nos olvida implementar el método `calcularDanioBase()`, Java dejará compilar el proyecto.
+    Si creamos la clase `Mago` y por descuido se nos olvida implementar el método `calcularDanioBase()`, Java dejará compilar el proyecto.
 
     ```
     // ESTO GENERA ERROR DE COMPILACIÓN
