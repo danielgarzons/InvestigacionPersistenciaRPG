@@ -416,7 +416,7 @@ La principal ventaja de que un Service reciba el repositorio en lugar de instanc
 
 Al delegar la creación del repositorio a un agente externo, nuestro código obtiene múltiples beneficios estructurales:
 
-- **Facilitar las pruebas unitarias (Unitarias Testing):** Si el Service crea su propio repositorio, quedaremos atados a una base de datos real, mientras que al recibirlo, podemos hacer un mock durante las pruebas. Lo que permite probar la lógica de negocio del Service de forma aislada, rápida y sin necesidad de conectarnos a una base de datos real, ni de usar datos reales en producción o desarrollo.
+- **Facilitar las pruebas unitarias (Unit Testing):** Si el Service crea su propio repositorio, quedaremos atados a una base de datos real, mientras que al recibirlo, podemos hacer un mock durante las pruebas. Lo que permite probar la lógica de negocio del Service de forma aislada, rápida y sin necesidad de conectarnos a una base de datos real, ni de usar datos reales en producción o desarrollo.
 
 - **Principio de Inversión de Dependencias (SOLID):** Al recibir el repositorio, el Service depende de una abstracción y no de una implementación concreta, lo que hace que al Service solo le importe que el objeto tenga los métodos necesarios en vez de que sepa que base de datos usa al crearlo él mismo.
 
