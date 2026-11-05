@@ -327,7 +327,7 @@ Y se diferencian en:
 
 **1.¿Qué significa "programar contra una interfaz y no contra una implementación"?**
 
-Esta frase significa separar el "qué hace" un componente de "cómo lo hace.
+Esta frase significa separar el "qué hace" un componente de "cómo lo hace."
 
 En lugar de que el código dependa de una clase concreta y específica, depende de una abstracción (un contrato o interfaz), sin importar que clase específica los esté ejecutando por detrás.
 
