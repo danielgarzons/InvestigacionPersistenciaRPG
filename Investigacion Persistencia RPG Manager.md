@@ -383,7 +383,7 @@ Imaginemos que nuestro `PersonajeService` (la capa de negocio) necesita obligato
 - ### En Python (Flask o Fast API)
     En Python, hacemos exactamente lo mismo utilizando el método constructor `__init__`:
 
-    ```
+    ```properties
     class PersonajeService:
         def __init__(self, personaje_repository):
         # Inyección de la dependencia por constructor
@@ -428,20 +428,22 @@ Al delegar la creación del repositorio a un agente externo, nuestro código obt
 
 - https://medium.com/@Masoncoding/programming-to-an-interface-not-an-implementation-024d01815070 (Trad. Español)
 
+--
+
 ## <p align="center">Tema 4: Configuración y secretos</p>
 
 **¿Como se lee un archivo .properties en Java y un archivo .ini en Python?
-Nombren la clase o el modulo que se usa. **
+Nombren la clase o el modulo que se usa.**
 
 Para leer archivos de configuración en Java y Python se utilizan las siguientes herramientas:
 
 Java (`.properties`):
-Clase:** `java.util.Properties`
-Cómo se lee:** Se instancia la clase `Properties` y se utiliza su metodo `load(InputStream inStream)` o `load(Reader reader)` para cargar el contenido del archivo de propiedades en memoria.
+**Clase:** `java.util.Properties`
+**Cómo se lee:** Se instancia la clase `Properties` y se utiliza su metodo `load(InputStream inStream)` o `load(Reader reader)` para cargar el contenido del archivo de propiedades en memoria.
 
 Python (`.ini`):
-Modulo: `configparser`
-Como se lee: Se importa el modulo, se inicializa un objeto con `configparser.ConfigParser()` y se utiliza el metodo `read('nombre_archivo.ini')` para procesar el archivo.
+**Modulo:** `configparser`
+**Como se lee:** Se importa el modulo, se inicializa un objeto con `configparser.ConfigParser()` y se utiliza el metodo `read('nombre_archivo.ini')` para procesar el archivo.
 
 ### __***Ejemplo:***__
 
