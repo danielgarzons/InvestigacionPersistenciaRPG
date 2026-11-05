@@ -312,7 +312,7 @@ Y se diferencian en:
 
 - **Mecanismo general:** En Java la clase abstracta es una estructura completamente distinta a una clase, mientras que en Python es una clase normal que hereda de la base `ABC` 
 
-- **Herencia Múltiple:** Una clase en Java implementar múltiples interface, pero solo heredar de una clase. Python permite herencia múltiple nativa, donde una clase puede heredar de varias clases abstractas o normales.
+- **Herencia Múltiple:** Una clase en Java implementar múltiples interfaces, pero solo heredar de una clase. Python permite herencia múltiple nativa, donde una clase puede heredar de varias clases abstractas o normales.
 
 - **Momento de Validación:** El compilador en Java detecta si falta un método en el tiempo de compilación, mientras que en Python la validación ocurre en el tiempo de ejecución, al momento de intentar instanciar la clase hija.
 
