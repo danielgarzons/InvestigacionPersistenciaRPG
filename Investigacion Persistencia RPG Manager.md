@@ -37,7 +37,7 @@ Abstrae el acceso a datos proporcionando una interfaz de alto nivel para interac
 - ### En Java (Javalin)
     Primero definimos el contrato (la interfaz del repositorio):
     
-   ```
+   ```properties
     public interface PersonajeRepository {
     List<Personaje> obtenerTodos();
     Personaje buscarPorId(String id);
@@ -47,7 +47,7 @@ Abstrae el acceso a datos proporcionando una interfaz de alto nivel para interac
     Luego, implementamos una versión en memoria que simula el almacenamiento actual y más adelante podríamos crear otra implementación para una base de datos (Ej: MySQL) sin tocar la lógica del controlador.
 
 
-    ```
+    ```properties
     public class PersonajeRepositoryEnMemoria implements PersonajeRepository {
     private List<Personaje> almacenamiento = new ArrayList<>();
 
@@ -75,7 +75,7 @@ Abstrae el acceso a datos proporcionando una interfaz de alto nivel para interac
 - ### En Python (Flask)
     En Python podemos usar clases y tipado para lograr el mismo nivel de abstracción:
 
-    ```
+    ```properties
     from abc import ABC, abstractmethod
 
     class PersonajeRepository(ABC):
@@ -135,7 +135,7 @@ Ahora veamos cómo se divide esta responsabilidad entre el `Service` y el `Repos
     Aquí aplicamos la regla, validamos y orquestamos.
 
     - ### En Java (Javalin):
-     ```
+     ```properties
         public class PersonajeService {
         private final PersonajeRepository repository;
 
@@ -159,7 +159,7 @@ Ahora veamos cómo se divide esta responsabilidad entre el `Service` y el `Repos
     <br>
 
     - ### En Python (Flask):
-    ```
+    ```properties
         class PersonajeService:
         def __init__(self, repository):
             self.repository = repository
@@ -183,7 +183,7 @@ Ahora veamos cómo se divide esta responsabilidad entre el `Service` y el `Repos
 
     - ### En Java:
 
-    ```
+    ```properties
     public class PersonajeRepositoryEnMemoria implements PersonajeRepository {
         private List<Personaje> database = new ArrayList<>();
 
@@ -197,7 +197,7 @@ Ahora veamos cómo se divide esta responsabilidad entre el `Service` y el `Repos
 
     - ### En Python:
     
-    ```
+    ```properties
     class PersonajeRepositoryEnMemoria(PersonajeRepository):
         def __init__(self):
             self.database = []
@@ -248,12 +248,12 @@ Creamos la interfaz para definir el contrato:
         public interface AccionCombate {
         void atacar(Personaje objetivo);
         int calcularDanioBase();
-    }
+       }
     ```
 - ### **CASO: IMPLEMENTACIÓN CORRECTA (Guerrero)**
     Aquí implementamos los métodos que exige la interfaz:
 
-    ```
+    ```properties
     public class Guerrero extends Personaje implements AccionCombate {
 
     @Override
@@ -273,7 +273,7 @@ Creamos la interfaz para definir el contrato:
 - ### **CASO: ¿Qué pasa si "olvidamos" un método? (Mago)**
     Si creamos la clase `Mago` y por descuido se nos olvida implementar el método `calcularDanioBase()`, Java dejará compilar el proyecto.
 
-    ```
+    ```properties
     // ESTO GENERA ERROR DE COMPILACIÓN
     public class Mago extends Personaje implements AccionCombate {
 
@@ -345,7 +345,7 @@ Imaginemos que nuestro `PersonajeService` (la capa de negocio) necesita obligato
 - ### En Java (Javalin)
     En Java, declaramos el repositorio como un campo final (para asegurar que sea inmutable) y lo recibimos como parámetro en el constructor de la clase:
 
-    ```
+    ```properties
     public class PersonajeService {
         // 1. Declaramos la dependencia como final
         private final PersonajeRepository personajeRepository;
@@ -370,7 +370,7 @@ Imaginemos que nuestro `PersonajeService` (la capa de negocio) necesita obligato
 
     ¿Cómo se inicializa esto en el sistema principal (Main.java o el enrutador de Javalin)?
 
-    ```
+    ```properties
     // Creamos la implementación concreta de la capa de datos
     PersonajeRepository repository = new PersonajeRepositoryEnMemoria();
 
@@ -401,12 +401,12 @@ Imaginemos que nuestro `PersonajeService` (la capa de negocio) necesita obligato
 
     ¿Cómo se instancia en la aplicación?
     
-    ```
-    # Instanciamos el repositorio
-    repositorio = PersonajeRepositoryEnMemoria()
-
-    # Inyectamos el repositorio al servicio al instanciarlo
-    servicio_personaje = PersonajeService(repositorio)
+    ```properties
+      # Instanciamos el repositorio
+      repositorio = PersonajeRepositoryEnMemoria()
+  
+      # Inyectamos el repositorio al servicio al instanciarlo
+      servicio_personaje = PersonajeService(repositorio)
     ```
 <br>
 
