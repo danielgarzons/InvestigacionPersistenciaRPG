@@ -469,6 +469,7 @@ taberna.default_hero_vida=100
 ### Implementación en `RPG_manager.java`
 
 ´´´
+
 package com.mycompany.rpg_manager;
 
 import io.javalin.Javalin;
