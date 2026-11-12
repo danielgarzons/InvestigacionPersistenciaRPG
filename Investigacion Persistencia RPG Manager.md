@@ -468,7 +468,7 @@ taberna.default_hero_vida=100
 
 ### Implementación en `RPG_manager.java`
 
-´´´java
+´´´
 package com.mycompany.rpg_manager;
 
 import io.javalin.Javalin;
@@ -513,7 +513,7 @@ public class RPG_manager {
         System.out.println("Servidor RPG Manager iniciado en el puerto: " + puerto);
     }
 }
-```
+´´´
 
 ---
 
