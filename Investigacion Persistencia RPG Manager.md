@@ -177,7 +177,7 @@ Ahora veamos cómo se divide esta responsabilidad entre el `Service` y el `Repos
 
 <br>
 
-- ### 2. Capa de Datos / Persistencia (`PersonajeService`)
+- ### 2. Capa de Datos / Persistencia (`PersonajeRepository`)
 
     A este nivel no le importa si el personaje es Mago, Guerrero o si tiene bonos de maná; su única misión es recibir el objeto ya procesado y llevarlo al almacenamiento:
 
